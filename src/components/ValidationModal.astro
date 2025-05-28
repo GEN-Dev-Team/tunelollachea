@@ -1,0 +1,31 @@
+<main
+  id="validationModal"
+  class="fixed top-0 left-0 z-50 w-full h-full bg-[#050920B8] grid place-items-center"
+>
+  <div class="p-6 bg-white rounded-md">
+    <input
+      class="placeholder:text-[#D5D9E2] text-black outline-none"
+      id="password"
+      type="text"
+      placeholder="Escribir Contraseña"
+    />
+  </div>
+</main>
+
+<script>
+  const modal = document.getElementById("validationModal");
+  const input = document.getElementById("password") as HTMLInputElement;
+  const passwordCorrecta = import.meta.env.PUBLIC_PASSWORD;
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      const valorIngresado = input.value;
+      if (valorIngresado === passwordCorrecta) {
+        console.log("✅ Contraseña correcta");
+        modal!.classList.add("hidden");
+      } else {
+        console.log("❌ Contraseña incorrecta");
+      }
+    }
+  });
+</script>

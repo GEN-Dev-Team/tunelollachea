@@ -1,11 +1,29 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import DashboardButtons from "../components/DashboardButtons.astro";
 ---
 
 <Layout>
-	<Welcome />
+  <h1 class="text-6xl font-bold text-[#C5D7FF] mt-12 mb-6">
+    DASHBOARD TÚNEL OLLACHEA
+  </h1>
+
+  <h2 class="text-4xl font-semibold text-[#C5D7FF] underline italic">
+    Mayo 2025
+  </h2>
+
+  <p class="w-2/3 my-6 text-xl">
+    El presente dashboard brinda una visión integral del avance del proyecto
+    Túnel Ollachea. A través de una interfaz interactiva e intuitiva, se
+    presenta:
+  </p>
+
+  <ul class="text-xl list-disc mx-7 space-5">
+    <li>Cronograma Gantt</li>
+    <li>Visualización del modelo BIM</li>
+    <li>Seguimiento de Avance Físico</li>
+    <li>Indicadores Claves de Desempeño (KPIs)</li>
+  </ul>
+
+  <DashboardButtons />
 </Layout>

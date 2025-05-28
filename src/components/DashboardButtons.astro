@@ -1,0 +1,98 @@
+---
+import ChartIcon from "../components/ChartIcon.astro";
+import TunnelIcon from "../components/TunnelIcon.astro";
+import HomeIcon from "../components/HomeIcon.astro";
+import CaretUp from "../components/CaretUp.astro";
+
+const BUTTONS = [
+  {
+    text: "Seguimiento de Avance General",
+    href: "/dashboard",
+  },
+  {
+    text: "Seguimiento de Avance Tunel",
+    href: "/dashboard",
+  },
+];
+
+const DROPDOWN_BUTTONS = [
+  {
+    text: "Centro técnico",
+    href: "/dashboard",
+  },
+  {
+    text: "EPI",
+    href: "/dashboard",
+  },
+  {
+    text: "Centro de Control",
+    href: "/dashboard",
+  },
+];
+---
+
+<div class="flex justify-between gap-10 my-auto">
+  {
+    BUTTONS.map((button, index) => (
+      <a
+        href={button.href}
+        class="flex items-center gap-3 font-medium text-[20px] bg-[#D8E4FF] border-3 border-[#96B4FF] text-[#0A244C] rounded-[20px] py-2 px-[10px]"
+      >
+        <span class="bg-[#2165FF] rounded-[10px] size-[62px] flex items-center justify-center">
+          {index === 0 && <ChartIcon />}
+          {index === 1 && <TunnelIcon />}
+          {index === 2 && <HomeIcon />}
+        </span>
+
+        {button.text}
+      </a>
+    ))
+  }
+
+  <button
+    id="dropdownButton"
+    class="cursor-pointer relative flex items-center gap-3 font-medium text-[20px] bg-[#D8E4FF] border-3 border-[#96B4FF] text-[#0A244C] rounded-[20px] py-2 px-[10px]"
+  >
+    <span
+      class="bg-[#2165FF] rounded-[10px] size-[62px] flex items-center justify-center"
+    >
+      <HomeIcon />
+    </span>
+
+    Seguimiento de Avance obras exteriores
+
+    <span
+      id="caretIcon"
+      class="rounded-full bg-[#0057FF] size-8 rotate-180 flex items-center justify-center shrink-0"
+    >
+      <CaretUp />
+    </span>
+
+    <div
+      id="dropdownMenu"
+      class="hidden absolute z-10 w-full bottom-[125%] left-0 py-7 pb-3 px-5 rounded-[10px] bg-[#D8E4FF29]"
+    >
+      {
+        DROPDOWN_BUTTONS.map((button) => (
+          <a
+            href={button.href}
+            class="mb-5 block py-5 font-bold text-black rounded-[10px] border-3 border-[#0057FF] bg-[#D8E4FF]"
+          >
+            {button.text}
+          </a>
+        ))
+      }
+    </div>
+  </button>
+</div>
+
+<script>
+  const dropdownButton = document.getElementById("dropdownButton");
+  const dropdownMenu = document.getElementById("dropdownMenu");
+  const caretIcon = document.getElementById("caretIcon");
+
+  dropdownButton!.addEventListener("click", () => {
+    dropdownMenu!.classList.toggle("hidden");
+    caretIcon!.classList.toggle("rotate-180");
+  });
+</script>
