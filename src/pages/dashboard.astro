@@ -1,6 +1,165 @@
-<iframe
-  width="100%"
-  height="600"
-  src="https://app.powerbi.com/view?r=eyJrIjoiMGJkZTkzZjgtMzMzYS00OTg5LTk2NGItYTMxNzM4MzIxZTI5IiwidCI6ImY5ZjQyOGE0LTI1MTgtNDk5YS04ZTY1LTdiMjU1ODEwMGRlMyIsImMiOjR9"
->
-</iframe>
+---
+import ChartIcon from "../components/ChartIcon.astro";
+import DownloadIcon from "../components/DownloadIcon.astro";
+import HomeIcon from "../components/HomeIcon.astro";
+import TunnelIcon from "../components/TunnelIcon.astro";
+import Layout from "../layouts/Layout.astro";
+import DropdownIcon from "../components/DropdownIcon.astro";
+
+const DropdownItems = [
+  {
+    text: "Inicio",
+    url: "/",
+  },
+  {
+    text: "Seguimiento de Avance General",
+    url: "/dashboard",
+  },
+  {
+    text: "Seguimiento de Avance Tunel",
+    url: "/dashboard",
+  },
+  {
+    text: "Centro técnico",
+    url: "/dashboard",
+  },
+  {
+    text: "EPI",
+    url: "/dashboard",
+  },
+  {
+    text: "Centro de control",
+    url: "/dashboard",
+  },
+  {
+    text: "Ver manual",
+    url: "/dashboard",
+  },
+];
+---
+
+<Layout>
+  <iframe
+    id="dashboardFrame"
+    class="fixed bottom-0 hidden right-0 z-1 w-full h-full"
+    src="https://app.powerbi.com/view?r=eyJrIjoiMGJkZTkzZjgtMzMzYS00OTg5LTk2NGItYTMxNzM4MzIxZTI5IiwidCI6ImY5ZjQyOGE0LTI1MTgtNDk5YS04ZTY1LTdiMjU1ODEwMGRlMyIsImMiOjR9"
+  >
+  </iframe>
+
+  <div
+    class="fixed px-10 text-center z-0 top-1/2 left-1/2 translate-[-50%] message py-7 w-xl leading-6"
+  >
+    Armando tu experiencia con precisión estructural Conectando vigas de
+    conocimiento, un momento por favor
+  </div>
+
+  <div class="fixed bottom-4 right-4 z-2 w-fit">
+    <div
+      id="dashboardDropdownButton"
+      class="absolute z-2 left-[-20px] top-[-20px] size-10 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer"
+    >
+      <DropdownIcon id="dashboardDropdownIcon" class="size-[21px]" />
+    </div>
+
+    <ul
+      id="dashboardDropdownMenu"
+      class="py-10 px-7 w-lg rounded-[10px] flex flex-col gap-6"
+    >
+      {
+        DropdownItems.map((item, index) => (
+          <a
+            href={item.url}
+            class="flex items-center gap-2 font-medium cursor-pointer"
+          >
+            <span
+              class={`w-full  text-center py-3 rounded-[30px] border border-[#96B4FF80] ${
+                index === 1 ? "bg-[#2165FF] border-0" : ""
+              }`}
+            >
+              {item.text}
+            </span>
+
+            <div
+              class={`size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer ${
+                index === 1 ? "bg-[#2165FF] border-0" : ""
+              }`}
+            >
+              {index === 0 && <HomeIcon class="size-[26px]" />}
+              {index === 1 && <ChartIcon class="size-[26px]" />}
+              {index === 2 && <TunnelIcon class="size-[26px]" />}
+              {index === 3 && <HomeIcon class="size-[26px]" />}
+              {index === 4 && <HomeIcon class="size-[26px]" />}
+              {index === 5 && <HomeIcon class="size-[26px]" />}
+              {index === 6 && <DownloadIcon class="size-[26px]" />}
+            </div>
+          </a>
+        ))
+      }
+    </ul>
+  </div>
+</Layout>
+
+<script>
+  const dashboardDropdownButton = document.getElementById(
+    "dashboardDropdownButton"
+  );
+  const dashboardDropdownMenu = document.getElementById(
+    "dashboardDropdownMenu"
+  );
+  const dashboardDropdownIcon = document.getElementById(
+    "dashboardDropdownIcon"
+  );
+
+  dashboardDropdownButton!.addEventListener("click", () => {
+    dashboardDropdownMenu!.classList.toggle("hidden");
+    dashboardDropdownButton!.classList.toggle("dropdown-closed");
+    dashboardDropdownIcon!.classList.toggle("size-[24px]");
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const iframe = document.getElementById("dashboardFrame");
+
+    setTimeout(() => {
+      iframe!.classList.remove("hidden");
+    }, 20000);
+
+    // iframe!.onload = () => {
+    //   iframe!.classList.remove("hidden");
+    // };
+  });
+
+  //   - Indicadores estratégicos actualizados para la toma de decisiones
+  // - Seguimiento detallado del avance físico por componente constructivo
+  // - Visualización integrada del modelo BIM y métricas de ejecución
+  // - Control de obra en tiempo real con trazabilidad por sistema y actividad
+  // - Paneles dinámicos para análisis de desviaciones y proyecciones
+</script>
+
+<style>
+  .dropdown-closed {
+    bottom: 24px;
+    right: 24px;
+    top: auto;
+    left: auto;
+    width: 61px;
+    height: 61px;
+  }
+
+  .message {
+    border-radius: 10px;
+    border: 1px solid rgba(150, 180, 255, 0.3);
+    background: rgba(13, 39, 97, 0.35);
+  }
+
+  #dashboardDropdownMenu {
+    border-radius: 10px;
+    border: 1px solid rgba(150, 180, 255, 0.3);
+    background: rgba(5, 28, 78, 0.8);
+    backdrop-filter: blur(3.1500000953674316px);
+  }
+
+  #dashboardDropdownButton {
+    background: rgba(5, 28, 78, 0.8);
+    backdrop-filter: blur(3.1500000953674316px);
+  }
+</style>

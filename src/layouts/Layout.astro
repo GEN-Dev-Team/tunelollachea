@@ -1,6 +1,4 @@
 ---
-import Header from "../components/Header.astro";
-import ValidationModal from "../components/ValidationModal.astro";
 import "../styles/global.css";
 import "@fontsource-variable/plus-jakarta-sans";
 ---
@@ -10,17 +8,25 @@ import "@fontsource-variable/plus-jakarta-sans";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content="Esta es una descripción de la página" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
   </head>
   <body class="w-full min-h-screen py-[50px] px-[65px] flex flex-col">
-    <Header />
-    <main class="max-w-[1440px] mx-auto flex-1 flex flex-col">
+    <video
+      class="fixed top-0 left-0 z-0 object-cover w-full h-full"
+      src="/public/media/video.mp4"
+      autoplay
+      loop
+      muted
+      playsinline></video>
+
+    <div class="fixed top-0 left-0 z-0 w-full h-full bg-custom"></div>
+
+    <main class="max-w-[1440px] mx-auto flex-1 flex flex-col relative z-10">
       <slot />
     </main>
-
-    <ValidationModal />
   </body>
 </html>
 
@@ -30,13 +36,16 @@ import "@fontsource-variable/plus-jakarta-sans";
     margin: 0;
     width: 100%;
     height: 100%;
+    font-family: "Plus Jakarta Sans Variable", sans-serif;
+    color: white;
+  }
+
+  .bg-custom {
     background: linear-gradient(
       90deg,
       #0a244c 0.1%,
-      rgba(10, 36, 76, 0.58) 57.35%,
+      rgba(10, 36, 76, 0.75) 80.35%,
       rgba(10, 36, 76, 0) 142.51%
     );
-    font-family: "Plus Jakarta Sans Variable", sans-serif;
-    color: white;
   }
 </style>

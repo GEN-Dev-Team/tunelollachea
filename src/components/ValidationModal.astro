@@ -1,31 +1,77 @@
+---
+import LockIcon from "./LockIcon.astro";
+import WarningIcon from "./WarningIcon.astro";
+---
+
 <main
   id="validationModal"
   class="fixed top-0 left-0 z-50 w-full h-full bg-[#050920B8] grid place-items-center"
 >
-  <div class="p-6 bg-white rounded-md">
-    <input
-      class="placeholder:text-[#D5D9E2] text-black outline-none"
-      id="password"
-      type="text"
-      placeholder="Escribir Contraseña"
-    />
+  <div class="flex flex-col items-center gap-5 p-6 bg-white rounded-md w-md">
+    <LockIcon />
+
+    <h2 class="text-[#374254] font-semibold text-[18px] text-center">
+      Es necesario que ingrese la contraseña para poder acceder
+    </h2>
+
+    <div class="flex flex-col w-full gap-2">
+      <label class="text-center font-medium text-[#374254]" for="password"
+        >Ingresar contraseña <span id="asterisk" class="hidden text-red-500"
+          >*</span
+        ></label
+      >
+      <input
+        class="placeholder:text-[#D5D9E2] text-black outline-none w-full rounded-md border border-[#D5D9E2] py-2 px-3"
+        id="password"
+        type="text"
+        placeholder="Escribir Contraseña"
+      />
+    </div>
+
+    <p
+      id="error-message"
+      class="flex items-center gap-3 text-xs text-red-400 leading-3.5 hidden"
+    >
+      <WarningIcon /> La contraseña es incorrecta, por favor <br /> intentalo otra
+      vez
+    </p>
+
+    <button
+      id="continueButton"
+      class="bg-[#2165FF] py-3 px-5 rounded-md text-white w-full cursor-pointer"
+      >Continuar</button
+    >
   </div>
 </main>
 
 <script>
   const modal = document.getElementById("validationModal");
+  const erroMessage = document.getElementById("error-message");
+  const button = document.getElementById("continueButton");
+  const asterisk = document.getElementById("asterisk");
   const input = document.getElementById("password") as HTMLInputElement;
   const passwordCorrecta = import.meta.env.PUBLIC_PASSWORD;
 
   input.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      const valorIngresado = input.value;
-      if (valorIngresado === passwordCorrecta) {
-        console.log("✅ Contraseña correcta");
-        modal!.classList.add("hidden");
-      } else {
-        console.log("❌ Contraseña incorrecta");
-      }
+      checkPassword();
     }
   });
+
+  button!.addEventListener("click", () => {
+    checkPassword();
+  });
+
+  function checkPassword() {
+    const valorIngresado = input.value;
+
+    if (valorIngresado === passwordCorrecta) {
+      modal!.classList.add("hidden");
+      erroMessage!.classList.add("hidden");
+      asterisk!.classList.add("hidden");
+    } else {
+      erroMessage!.classList.remove("hidden");
+      asterisk!.classList.remove("hidden");
+    }
+  }
 </script>
