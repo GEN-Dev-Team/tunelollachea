@@ -66,6 +66,8 @@ import WarningIcon from "./WarningIcon.astro";
     const valorIngresado = input.value;
 
     if (valorIngresado === passwordCorrecta) {
+      sessionStorage.setItem("authValidated", "true");
+
       modal!.classList.add("hidden");
       erroMessage!.classList.add("hidden");
       asterisk!.classList.add("hidden");
@@ -73,5 +75,9 @@ import WarningIcon from "./WarningIcon.astro";
       erroMessage!.classList.remove("hidden");
       asterisk!.classList.remove("hidden");
     }
+  }
+
+  if (sessionStorage.getItem("authValidated") === "true") {
+    modal!.classList.add("hidden");
   }
 </script>

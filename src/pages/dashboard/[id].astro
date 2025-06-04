@@ -1,0 +1,215 @@
+---
+import type { GetStaticPaths } from "astro";
+import DownloadIcon from "../../components/DownloadIcon.astro";
+import HomeIcon from "../../components/HomeIcon.astro";
+import TunnelIcon from "../../components/TunnelIcon.astro";
+import Layout from "../../layouts/Layout.astro";
+import DropdownIcon from "../../components/DropdownIcon.astro";
+import ChartIcon from "../../components/ChartIcon.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const dashboards = await getCollection("dashboards");
+
+  return dashboards.map((dashboard) => ({
+    params: { id: dashboard.slug },
+    props: { dashboard },
+  }));
+}
+
+const DropdownItems = [
+  {
+    text: "Seguimiento de Avance General",
+    url: "seguimiento-avance-general",
+  },
+  {
+    text: "Seguimiento de Avance Tunel",
+    url: "seguimiento-avance-tunel",
+  },
+  {
+    text: "Centro técnico",
+    url: "centro-tecnico",
+  },
+  {
+    text: "EPI",
+    url: "epi",
+  },
+  {
+    text: "Centro de control",
+    url: "centro-de-control",
+  },
+];
+
+const { dashboard } = Astro.props;
+const { data } = dashboard;
+const { dashboardUrl } = data;
+---
+
+<Layout>
+  <iframe
+    id="dashboardFrame"
+    class="fixed bottom-0 hidden right-0 z-1 w-full h-full"
+    src=`${dashboardUrl}`
+  >
+  </iframe>
+
+  <div
+    class="fixed min-h-[106px] px-10 flex justify-center items-center text-center z-0 top-1/2 left-1/2 translate-[-50%] message py-7 w-xl leading-6"
+  >
+    Paneles dinámicos para análisis de desviaciones y proyecciones
+  </div>
+
+  <div class="fixed bottom-4 right-4 z-2 w-fit">
+    <div
+      id="dashboardDropdownButton"
+      class="absolute z-2 left-[-20px] top-[-20px] size-10 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer"
+    >
+      <DropdownIcon id="dashboardDropdownIcon" class="size-[21px]" />
+    </div>
+
+    <ul
+      id="dashboardDropdownMenu"
+      class="py-10 px-7 w-lg rounded-[10px] flex flex-col gap-6"
+    >
+      <a
+        href="/"
+        class="dashboard-item flex items-center gap-2 font-medium cursor-pointer"
+      >
+        <span
+          class="dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]"
+        >
+          Inicio
+        </span>
+
+        <div
+          class="dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer"
+        >
+          <HomeIcon class="size-[26px]" />
+        </div>
+      </a>
+
+      {
+        DropdownItems.map((item, index) => (
+          <a
+            href={`/dashboard/${item.url}`}
+            class="dashboard-item flex items-center gap-2 font-medium cursor-pointer"
+            data-index={index}
+          >
+            <span
+              class={`dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]
+            ${dashboard.slug === item.url ? "bg-[#2165FF] border border-[#2165FF]" : ""}
+            `}
+            >
+              {item.text}
+            </span>
+
+            <div
+              class={`dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer
+            ${dashboard.slug === item.url ? "bg-[#2165FF] border border-[#2165FF]" : ""}
+            `}
+            >
+              {index === 0 && <ChartIcon class="size-[26px]" />}
+              {index === 1 && <TunnelIcon class="size-[26px]" />}
+              {index === 2 && <HomeIcon class="size-[26px]" />}
+              {index === 3 && <HomeIcon class="size-[26px]" />}
+              {index === 4 && <HomeIcon class="size-[26px]" />}
+            </div>
+          </a>
+        ))
+      }
+
+      <a
+        href="/"
+        class="dashboard-item flex items-center gap-2 font-medium cursor-pointer"
+      >
+        <span
+          class="dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]"
+        >
+          Ver manual
+        </span>
+
+        <div
+          class="dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer"
+        >
+          <DownloadIcon class="size-[26px]" />
+        </div>
+      </a>
+    </ul>
+  </div>
+</Layout>
+
+<script>
+  const dashboardDropdownButton = document.getElementById(
+    "dashboardDropdownButton"
+  );
+  const dashboardDropdownMenu = document.getElementById(
+    "dashboardDropdownMenu"
+  );
+  const dashboardDropdownIcon = document.getElementById(
+    "dashboardDropdownIcon"
+  );
+  const iframe = document.getElementById("dashboardFrame") as HTMLIFrameElement;
+  const loadingMessage = document.querySelector(".message");
+
+  const texts = [
+    "Indicadores estratégicos actualizados para la toma de decisiones",
+    "Seguimiento detallado del avance físico por componente constructivo",
+    "Visualización integrada del modelo BIM y métricas de ejecución",
+    "Control de obra en tiempo real con trazabilidad por sistema y actividad",
+    "Paneles dinámicos para análisis de desviaciones y proyecciones",
+  ];
+
+  dashboardDropdownButton!.addEventListener("click", () => {
+    dashboardDropdownMenu!.classList.toggle("hidden");
+    dashboardDropdownButton!.classList.toggle("dropdown-closed");
+    dashboardDropdownIcon!.classList.toggle("size-[24px]");
+  });
+
+  document.addEventListener("DOMContentLoaded", () => {
+    startBgLoading();
+  });
+
+  function startBgLoading() {
+    let index = 0;
+    const interval = setInterval(() => {
+      loadingMessage!.textContent = texts[index];
+      index = (index + 1) % texts.length;
+    }, 4000);
+
+    iframe!.classList.add("hidden");
+
+    setTimeout(() => {
+      iframe!.classList.remove("hidden");
+      clearInterval(interval);
+    }, 30000);
+  }
+</script>
+
+<style>
+  .dropdown-closed {
+    bottom: 24px;
+    right: 24px;
+    top: auto;
+    left: auto;
+    width: 61px;
+    height: 61px;
+  }
+
+  .message {
+    border-radius: 10px;
+    border: 1px solid rgba(150, 180, 255, 0.3);
+    background: rgba(13, 39, 97, 0.35);
+  }
+
+  #dashboardDropdownMenu {
+    border-radius: 10px;
+    border: 1px solid rgba(150, 180, 255, 0.3);
+    background: rgba(5, 28, 78, 0.8);
+    backdrop-filter: blur(3.1500000953674316px);
+  }
+
+  #dashboardDropdownButton {
+    background: rgba(5, 28, 78, 0.8);
+    backdrop-filter: blur(3.1500000953674316px);
+  }
+</style>
