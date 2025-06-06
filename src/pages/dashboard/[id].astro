@@ -1,5 +1,4 @@
 ---
-import type { GetStaticPaths } from "astro";
 import DownloadIcon from "../../components/DownloadIcon.astro";
 import HomeIcon from "../../components/HomeIcon.astro";
 import TunnelIcon from "../../components/TunnelIcon.astro";
@@ -73,16 +72,18 @@ const { dashboardUrl } = data;
     >
       <a
         href="/"
-        class="dashboard-item flex items-center gap-2 font-medium cursor-pointer"
+        class="dashboard-item flex items-center gap-2 font-medium cursor-pointer group"
       >
         <span
-          class="dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]"
+          class="dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]
+                group-hover:bg-[#2164ff3b] group-hover:border-[#2164ff3b]"
         >
           Inicio
         </span>
 
         <div
-          class="dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer"
+          class="dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer
+                group-hover:bg-[#2164ff3b] group-hover:border-[#2164ff3b]"
         >
           <HomeIcon class="size-[26px]" />
         </div>
@@ -92,12 +93,13 @@ const { dashboardUrl } = data;
         DropdownItems.map((item, index) => (
           <a
             href={`/dashboard/${item.url}`}
-            class="dashboard-item flex items-center gap-2 font-medium cursor-pointer"
+            class="dashboard-item flex items-center gap-2 font-medium cursor-pointer group"
             data-index={index}
           >
             <span
               class={`dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]
-            ${dashboard.slug === item.url ? "bg-[#2165FF] border border-[#2165FF]" : ""}
+                group-hover:bg-[#2164ff3b]  group-hover:border-[#2164ff3b]
+                ${dashboard.slug === item.url ? "bg-[#2165FF] border border-[#2165FF]" : ""}
             `}
             >
               {item.text}
@@ -105,7 +107,8 @@ const { dashboardUrl } = data;
 
             <div
               class={`dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer
-            ${dashboard.slug === item.url ? "bg-[#2165FF] border border-[#2165FF]" : ""}
+                group-hover:bg-[#2164ff3b]  group-hover:border-[#2164ff3b]
+                ${dashboard.slug === item.url ? "bg-[#2165FF] border border-[#2165FF]" : ""}
             `}
             >
               {index === 0 && <ChartIcon class="size-[26px]" />}
@@ -119,17 +122,20 @@ const { dashboardUrl } = data;
       }
 
       <a
-        href="/"
-        class="dashboard-item flex items-center gap-2 font-medium cursor-pointer"
+        href="http://drive.google.com/file/d/1aYkvfmJVsIu3G3TSl9zRPIYPgnib-MKH/view"
+        target="_blank"
+        class="dashboard-item flex items-center gap-2 font-medium cursor-pointer group"
       >
         <span
-          class="dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]"
+          class="dashboard-text w-full text-center py-3 rounded-[30px] border border-[#96B4FF80]
+                group-hover:bg-[#2164ff3b] group-hover:border-[#2164ff3b]"
         >
           Ver manual
         </span>
 
         <div
-          class="dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer"
+          class="dashboard-icon size-10 shrink-0 rounded-full border border-[#96B4FF4D] flex items-center justify-center cursor-pointer
+                group-hover:bg-[#2164ff3b] group-hover:border-[#2164ff3b]"
         >
           <DownloadIcon class="size-[26px]" />
         </div>
@@ -159,10 +165,10 @@ const { dashboardUrl } = data;
     "Paneles dinámicos para análisis de desviaciones y proyecciones",
   ];
 
-  dashboardDropdownButton!.addEventListener("click", () => {
-    dashboardDropdownMenu!.classList.toggle("hidden");
-    dashboardDropdownButton!.classList.toggle("dropdown-closed");
-    dashboardDropdownIcon!.classList.toggle("size-[24px]");
+  dashboardDropdownButton?.addEventListener("click", () => {
+    dashboardDropdownMenu?.classList.toggle("hidden");
+    dashboardDropdownButton?.classList.toggle("dropdown-closed");
+    dashboardDropdownIcon?.classList.toggle("size-[24px]");
   });
 
   document.addEventListener("DOMContentLoaded", () => {
@@ -176,12 +182,12 @@ const { dashboardUrl } = data;
       index = (index + 1) % texts.length;
     }, 4000);
 
-    iframe!.classList.add("hidden");
+    iframe?.classList.add("hidden");
 
     setTimeout(() => {
-      iframe!.classList.remove("hidden");
+      iframe?.classList.remove("hidden");
       clearInterval(interval);
-    }, 30000);
+    }, 120000);
   }
 </script>
 
